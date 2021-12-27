@@ -1,5 +1,6 @@
 package br.papait.bruno.autenticacaojwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class Usuario implements Serializable {
   private String login;
 
   @Column(name = "PASSWORD", unique = true)
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 }

@@ -25,8 +25,11 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
   public static final int TOKEN_EXPIRACAO = 600_000;
   public static final String TOKEN_SENHA = "f01b08f3-4763-40a2-8ada-b4495b4ea93d";
 
-  @Autowired
-  private AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
+
+  public JWTAutenticarFilter(AuthenticationManager authenticationManager) {
+    this.authenticationManager = authenticationManager;
+  }
 
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -42,7 +45,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-    DetalhesUsuarioData detalhesUsuarioData = (DetalhesUsuarioData)authResult.getPrincipal();
+    DetalhesUsuarioData detalhesUsuarioData = (DetalhesUsuarioData) authResult.getPrincipal();
 
     String token = JWT.create()
             .withSubject(detalhesUsuarioData.getUsername())
